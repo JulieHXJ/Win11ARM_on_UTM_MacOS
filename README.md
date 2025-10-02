@@ -28,24 +28,21 @@ This guide explains how to install **Windows 11 ARM** on an Apple Silicon Mac us
 ---
 
 ## 1. Install UTM
-- Download: 👉 [https://mac.getutm.app](https://mac.getutm.app)  
+- Download: [https://mac.getutm.app](https://mac.getutm.app)  
 - Install: open `.dmg`, drag **UTM.app** into Applications.  
 - Launch UTM.  
 
----
 
 ## 2. Create a New Virtual Machine
 1. Open UTM → click **Create a New Virtual Machine**.  
 2. Choose **Virtualize → Windows**.  
    ⚠️ Do **NOT** choose *Emulate* (too slow).  
 
----
 
 ## 3. Get Windows 11 ARM Image
 - On ISO setup screen → click **Get → Latest Windows 11 for ARM**.  
 - Select language → download.  
 
----
 
 ## 4. Configure the VM
 Recommended settings:  
@@ -54,7 +51,6 @@ Recommended settings:
 - **Disk**: 64–100 GB (dynamic)  
 - Check *Install drivers and SPICE tools* (for display/mouse integration) 
 
----
 
 ## 5. Install Windows
 1. Start the VM → installer will boot.  
@@ -63,7 +59,6 @@ Recommended settings:
 4. Disk: choose **Drive 0 Unallocated Space → Next**.  
 5. Windows copies files, restarts automatically → proceed with region, keyboard, account.  
 
----
 
 ## 6. First Boot & Troubleshooting
 
@@ -71,13 +66,11 @@ Recommended settings:
 - Reason: VM boots from ISO instead of installed disk.  
 - Fix: Shut down → Go to Settings → **CD/DVD → remove Windows ISO** (keep only `utm-guest-tools.iso`) → restart.  
 
----
 
 ### Case 2: Message “It looks like you started an upgrade…”
 - Reason: VM still booted from ISO.  
 - Fix: Same as case 1. 
 
----
 
 ### Case 3: Windows desktop loads, activation fails  
 - Message: *“Cannot connect to my organisation's activation server.”*  
@@ -86,27 +79,24 @@ Recommended settings:
   - No personalization (wallpapers/themes)  
 - All SAP functions work without activation.  
 
----
 
 ## 7. Guest Tools
 - If *Install drivers and SPICE tools* was checked, features like auto-resize and mouse integration should already work.
 - If not → open `utm-guest-tools.iso` inside Windows and install manually.  
 
----
 
 ## 8. Activation
 - Optional. Not required for SAP.  
 - If provided by university:  
   `Settings → System → Activation → Change product key`  
 
----
 
 ## 9. Next Steps: SAP GUI
 1. Inside Windows VM → install your university VPN client.
 2. Connect VPN → ensures access to campus SAP servers.  
 3. Download and install **SAP GUI for Windows** (from your university IT portal).  
-4. Configure SAP connection settings → log in → start ABAP programming 🎉.  
+4. Configure SAP connection settings → log in → start ABAP programming.  
 
 ---
 
-✍️ *Maintained by students of Augsburg University of Applied Sciences – 2025*  
+*Maintained by students of Augsburg University of Applied Sciences – 2025*  
