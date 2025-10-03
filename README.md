@@ -40,8 +40,11 @@ This guide explains how to install **Windows 11 ARM** on an Apple Silicon Mac us
 
 
 ## 3. Get Windows 11 ARM Image
-- On ISO setup screen → click **Get → Latest Windows 11 for ARM**.  
-- Select language → download.  
+- On the ISO setup screen → click **Get Latest Windows 11 for ARM**.  
+- UTM will redirect you to **CrystalFetch**, a helper tool that connects to Microsoft’s official servers.  
+- Choose your preferred language.  
+- Confirm the download. CrystalFetch will generate and fetch the official Windows 11 ARM ISO.  
+- Once the download is finished, return to UTM and select the ISO file to continue.   
 
 
 ## 4. Configure the VM
