@@ -13,8 +13,9 @@ This guide explains how to install **Windows 11 ARM** on an Apple Silicon Mac us
 6. [Install Windows](#5-install-windows)  
 7. [First Boot Troubleshooting](#6-first-boot--troubleshooting)  
 8. [Guest Tools](#7-guest-tools)  
-9. [Activation](#8-activation)  
-10. [Next Steps: SAP GUI](#9-next-steps-sap-gui)  
+9. [Activation](#8-activation)
+10. [Networking Issues](#9-networking-issues)
+11. [Next Steps: SAP GUI](#10-next-steps-sap-gui)
 
 ---
 
@@ -94,11 +95,81 @@ Recommended settings:
   `Settings → System → Activation → Change product key`  
 
 
-## 9. Next Steps: SAP GUI
+## 9. Networking Issues
+
+Some users may encounter **“No Internet”** inside Windows after installation.
+Here are the known solutions (from easiest → advanced):
+
+### Case 1: No Network During Windows Setup
+
+* At the **language selection screen** → press **Shift + F10** to open Command Prompt.
+* Enter one of the following (depends on Windows version):
+
+  * `OOBE\BYPASSNRO` → VM will reboot, then you will see *“I don’t have internet”*.
+  * or `start ms-cxh:localonly` → skips internet requirement, lets you create a **local account**.
+* After installation, install **SPICE Guest Tools** to enable drivers (including network).
+
+### Case 2: No Internet After Windows Desktop Loads
+
+#### Solution 1: Install SPICE Guest Tools
+
+* Make sure **SPICE Guest Tools (utm-guest-tools.iso)** is installed.
+* Provides the **Red Hat VirtIO Ethernet Adapter** driver.
+* Check in **Device Manager → Network Adapters**:
+
+  * ✅ If you see *Red Hat VirtIO Ethernet Adapter* → driver is installed.
+  * ⚠️ If you only see *Unknown Device* (yellow mark) → reinstall Guest Tools manually.
+
+#### Solution 2: Bridged Network Mode (Most Reliable in My Case)
+
+* On your Mac Terminal → run `ifconfig` to find the correct interface (normally `en0` = Wi-Fi).
+* In UTM:
+
+  1. Shut down VM.
+  2. Go to **UTM → VM → Edit → Network**.
+  3. Change **Network Mode** → `Bridged (Advanced)`.
+  4. Under *Bridged Interface*, select the interface you found (e.g. `en0`).
+  5. Keep **Emulated Network Card = virtio-net-pci**.
+* Start VM → open **cmd** → run `ipconfig`.
+
+  * If your VM gets an IP in the same subnet as your Mac (e.g. Mac `192.168.0.12`, VM `192.168.0.20`), networking works (Tip: Both your Mac and VM should share the same subnet — usually the first three parts of the IP, e.g. 192.168.0.xxx.if you don't know how to calculate IP address and subnet just ask master ChatGPT).
+
+#### Solution 3: Change Emulated Network Card (This May Fail)
+
+* Shut down VM → UTM **Settings → Network**.
+* Change **Emulated Network Card**: `virtio-net-pci` → `Intel e1000`.
+* Windows 11 has built-in Intel e1000 drivers, so it should connect immediately.
+* ⚠️ In my case this causes *“Your PC did not start correctly”* → use carefully!
+
+#### Testing Network Inside VM
+
+* Open **Command Prompt** in Windows and test:
+
+  * Ping Internet:
+
+    ```bash
+    ping 8.8.8.8
+    ```
+
+    If replies succeed → internet works.
+  * Test DNS:
+
+    ```bash
+    nslookup www.google.com 8.8.8.8
+    ```
+
+    If DNS fails but ping works → change DNS:
+    `Settings → Network & Internet → Ethernet → Edit DNS` → set manual Preferred DNS: 8.8.8.8 and Alternate DNS: 1.1.1.1.
+
+    If both ping and DNS succeed, your VM networking is fully functional.
+
+
+## 10. Next Steps: SAP GUI
+
 1. Inside Windows VM → install your university VPN client.
-2. Connect VPN → ensures access to campus SAP servers.  
-3. Download and install **SAP GUI for Windows** (from your university IT portal).  
-4. Configure SAP connection settings → log in → start ABAP programming.  
+2. Connect VPN → ensures access to campus SAP servers.
+3. Download and install **SAP GUI for Windows** (from your university IT portal).
+4. Configure SAP connection settings → log in → start ABAP programming.
 
 ---
 
